@@ -47,7 +47,7 @@ server {
     <% end %>
 
     <% if rewrite_missing_html_extension %>
-    try_files $uri $uri/ $uri.html;
+    try_files $uri $uri/ $uri.html =404;
     <% end %>
   }
 
