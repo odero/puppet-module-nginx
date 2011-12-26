@@ -6,6 +6,7 @@ define nginx::site($domain,
                    $mediaroot="",
                    $mediaprefix="",
                    $default_vhost=false,
+                   $autoindex=false,
                    $rewrite_missing_html_extension=false,
                    $upstreams=[],
                    $aliases=[]) {

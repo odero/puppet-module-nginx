@@ -44,6 +44,9 @@ server {
     try_files $uri @<%= name %>;
     <% else %>
     index  index.html;
+      <% if autoindex %>
+    autoindex on;
+      <% end %>
     <% end %>
 
     <% if rewrite_missing_html_extension %>
