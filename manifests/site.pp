@@ -9,7 +9,10 @@ define nginx::site($domain,
                    $autoindex=false,
                    $rewrite_missing_html_extension=false,
                    $upstreams=[],
-                   $aliases=[]) {
+                   $aliases=[],
+                   $ssl=false,
+                   $ssl_certificate="",
+                   $ssl_certificate_key="") {
 
   $absolute_mediaroot = inline_template("<%= File.expand_path(mediaroot, root) %>")
 
