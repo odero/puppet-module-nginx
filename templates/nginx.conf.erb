@@ -1,4 +1,4 @@
-user <%= scope.lookupvar('operatingsystem') =~ /centos|fedora|redhat/i ? 'nginx' : 'www-data' %>;
+user <%= nginx_user %>;
 worker_processes <%= workers %>;
 
 error_log  /var/log/nginx/error.log;

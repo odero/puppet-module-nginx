@@ -5,6 +5,10 @@ class nginx($workers=1, $ensure=present) {
     ensure => $ensure,
   }
 
+  $nginx_user = $::operatingsystem ? {
+    /(?i)centos|fedora|redhat/ => "nginx",
+    default                    => "www-data",
+  }
   file {
     "/etc/nginx/nginx.conf":
       ensure => $ensure,
