@@ -47,24 +47,33 @@ define nginx::site($domain,
     }
   }
 
+  $nginx_conf_dir = $::operatingsystem ? {
+    /(?i)centos|fedora|redhat/ => "/etc/nginx/conf.d",
+    default                    => "/etc/nginx/sites-available",
+  }
+
   file {
-    "/etc/nginx/sites-available/${name}.conf":
+    "${nginx_conf_dir}/${name}.conf":
       ensure => $ensure,
       content => template("nginx/site.conf.erb"),
       require => [File[$root],
                   Package[nginx]],
       notify => Service[nginx];
+  }
 
-    "/etc/nginx/sites-enabled/${name}.conf":
-      ensure => $ensure ? {
-        'present' => link,
-        'absent' => $ensure,
-      },
-      target => $ensure ? {
-        'present' => "/etc/nginx/sites-available/${name}.conf",
-        'absent' => notlink,
-      },
-      require => File["/etc/nginx/sites-available/${name}.conf"],
-      notify => Service[nginx];
+  if $::operatingsystem !~ /(?i)centos|fedora|redhat/ {
+    file {
+      "/etc/nginx/sites-enabled/${name}.conf":
+        ensure => $ensure ? {
+          'present' => link,
+          'absent' => $ensure,
+        },
+        target => $ensure ? {
+          'present' => "/etc/nginx/sites-available/${name}.conf",
+          'absent' => notlink,
+        },
+        require => File["/etc/nginx/sites-available/${name}.conf"],
+        notify => Service[nginx];
+    }
   }
 }
