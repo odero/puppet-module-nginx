@@ -24,7 +24,7 @@ upstream <%= name %> {
 
 server {
   listen <% if ssl %>443<% else %>80<% end %><% if default_vhost %> default deferred<% end %>;
-  client_max_body_size 4G;
+  client_max_body_size <%= client_max_body_size %>;
   server_name <%= domain %>;
 
   <% if ssl %>
