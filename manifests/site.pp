@@ -29,11 +29,13 @@ define nginx::site($domain,
       }
     }
 
-    file { $root:
-      ensure => directory,
-      owner => $owner,
-      group => $group,
-      require => File[$root_parent],
+    if !defined(File[$root]) {
+      file { $root:
+        ensure => directory,
+        owner => $owner,
+        group => $group,
+        require => File[$root_parent],
+      }
     }
 
   } elsif $ensure == 'absent' {
