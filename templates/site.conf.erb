@@ -17,7 +17,7 @@ server {
 <% unless @upstreams.empty? %>
 upstream <%= @name %> {
   <% @upstreams.each do |upstream| %>
-  server <%= @upstream %> fail_timeout=0;
+  server <%= upstream %> fail_timeout=0;
   <% end %>
 }
 <% end %>
