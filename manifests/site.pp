@@ -15,11 +15,11 @@ define nginx::site($domain,
                    $ssl_certificate="",
                    $ssl_certificate_key="") {
 
-  $absolute_mediaroot = inline_template("<%= File.expand_path(mediaroot, root) %>")
+  $absolute_mediaroot = inline_template("<%= File.expand_path(@mediaroot, @root) %>")
 
   if $ensure == 'present' {
     # Parent directory of root directory. /var/www for /var/www/blog
-    $root_parent = inline_template("<%= root.match(%r!(.+)/.+!)[1] %>")
+    $root_parent = inline_template("<%= @root.match(%r!(.+)/.+!)[1] %>")
 
     if !defined(File[$root_parent]) {
       file { $root_parent:
